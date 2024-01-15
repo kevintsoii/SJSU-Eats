@@ -5,8 +5,6 @@ import psycopg2
 from dotenv import load_dotenv
 
 
-DATABASE_NAME = "sjsu_eats"
-
 load_dotenv()
 
 try:
@@ -17,13 +15,12 @@ try:
         password=os.getenv("DB_PASSWORD"),
     )
     conn.autocommit = True
+    cur = conn.cursor()
 except psycopg2.Error as e:
     sys.exit(f"Failed to connect to PostgreSQL: {e}")
 
-cur = conn.cursor()
-
 try:
-    cur.execute(f"CREATE DATABASE {DATABASE_NAME};")
+    cur.execute(f"CREATE DATABASE sjsu_eats;")
 except psycopg2.Error as e:
     input("Warning: The database already exists.\n"
           "Press enter to continue (old data will be lost): ")
@@ -38,11 +35,10 @@ conn = psycopg2.connect(
     user=os.getenv("DB_USER"),
     password=os.getenv("DB_PASSWORD"),
 )
-
 cur = conn.cursor()
 
 cur.execute("""
-    DROP TABLE IF EXISTS items;
+    DROP TABLE IF EXISTS items CASCADE;
     CREATE TABLE items (
         item_id CHAR(24) PRIMARY KEY,
         name VARCHAR(64) NOT NULL,
@@ -56,7 +52,7 @@ cur.execute("""
 )
 
 cur.execute("""
-    DROP TABLE IF EXISTS locations;
+    DROP TABLE IF EXISTS locations CASCADE;
     CREATE TABLE locations (
         location_id CHAR(24) PRIMARY KEY,
         name VARCHAR(64) NOT NULL,
@@ -66,7 +62,7 @@ cur.execute("""
 )
 
 cur.execute("""
-    DROP TABLE IF EXISTS menus;
+    DROP TABLE IF EXISTS menus CASCADE;
     CREATE TABLE menus (
         date DATE,
         meal SMALLINT,
@@ -76,6 +72,8 @@ cur.execute("""
     );
 """
 )
+
+conn.commit()
 
 cur.close()
 conn.close()
