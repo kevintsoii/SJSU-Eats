@@ -38,10 +38,9 @@ conn = psycopg2.connect(
 cur = conn.cursor()
 
 cur.execute("""
-    DROP TABLE IF EXISTS items CASCADE;
+    DROP TABLE IF EXISTS items;
     CREATE TABLE items (
-        item_id CHAR(24) PRIMARY KEY,
-        name VARCHAR(64) NOT NULL,
+        name VARCHAR(64) PRIMARY KEY,
         description VARCHAR(256),
         portion VARCHAR(64),
         ingredients TEXT,
@@ -54,8 +53,7 @@ cur.execute("""
 cur.execute("""
     DROP TABLE IF EXISTS locations CASCADE;
     CREATE TABLE locations (
-        location_id CHAR(24) PRIMARY KEY,
-        name VARCHAR(64) NOT NULL,
+        name VARCHAR(64) PRIMARY KEY,
         image VARCHAR(256)
     );
 """
@@ -66,9 +64,9 @@ cur.execute("""
     CREATE TABLE menus (
         date DATE,
         meal SMALLINT,
-        location_id CHAR(24) REFERENCES locations(location_id),
-        item_ids CHAR(24)[],
-        PRIMARY KEY(date, meal, location_id)
+        location VARCHAR(64) REFERENCES locations(name),
+        items VARCHAR(64)[],
+        PRIMARY KEY(date, meal, location)
     );
 """
 )
