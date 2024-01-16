@@ -2,11 +2,11 @@ import os
 import json
 import time
 from typing import Dict, Any
+from datetime import datetime, timedelta
 
 import psycopg2
 import requests
 from dotenv import load_dotenv
-from datetime import datetime, timedelta
 
 
 API_URL = "https://api.dineoncampus.com/v1/location/5b50c589f3eeb609b36a87eb/periods/%s?platform=0&date=%s"
