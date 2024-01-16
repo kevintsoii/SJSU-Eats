@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 
 import psycopg2
 from psycopg2 import extras
@@ -23,6 +24,14 @@ conn.autocommit = True
 cur = conn.cursor(cursor_factory=extras.RealDictCursor)
 
 
+def is_valid_date(date: str) -> bool:
+    try:
+        datetime.strptime(date, "%Y-%m-%d")
+        return True
+    except ValueError:
+        return False
+
+
 @app.route("/api/menus/<date>")
 def get_menus(date):
     """
@@ -32,6 +41,9 @@ def get_menus(date):
     Args:
         date (str): YYYY-MM-DD format
     """
+    if not is_valid_date(date):
+        return jsonify({"error": "Invalid date format."}), 400
+    
     # date, meal, location, items
     cur.execute("SELECT * FROM menus WHERE date = %s;", (date, ))
     rows = cur.fetchall()
