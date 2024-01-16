@@ -11,9 +11,9 @@ from datetime import datetime, timedelta
 
 API_URL = "https://api.dineoncampus.com/v1/location/5b50c589f3eeb609b36a87eb/periods/%s?platform=0&date=%s"
 MEAL_TYPES = {
-    "64ed07d2351d530789c1010d": 0,
-    "64ed07d2351d530789c10121": 1,
-    "64ed07d2351d530789c10117": 2
+    "64ed07d2351d530789c1010d": "breakfast",
+    "64ed07d2351d530789c10121": "lunch",
+    "64ed07d2351d530789c10117": "dinner"
 }
 
 load_dotenv()
@@ -74,11 +74,13 @@ def add_location(location_data: Dict[str, Any]) -> None:
     found_locations.add(location_data["name"])
 
 
-def scrape_menus(date: str) -> None:
+def scrape_menus(date: str) -> bool:
     """
     Scrapes breakfast, lunch, and dinner menus for a given date.
     Inserts items, locations, and menus into the database.
     """
+    scraped = False
+
     for meal_hash, meal_type in MEAL_TYPES.items():
         response = requests.get(API_URL % (meal_hash, date))
         data = response.json()
@@ -95,14 +97,17 @@ def scrape_menus(date: str) -> None:
                     "INSERT INTO menus VALUES (%s, %s, %s, %s)",
                     (date, meal_type, location_data["name"], items)
                 )
+                scraped = True
             except psycopg2.IntegrityError:
                 pass
             conn.commit()
+    
+    return scraped
 
 
 def main():
     current_date = datetime(2023, 12, 1)
-    end_date = datetime(2024, 1, 1)
+    end_date = datetime(2024, 12, 15)
     
     while current_date < end_date:
         print(f'Obtaining menus for {current_date.strftime("%Y-%m-%d")}.')
