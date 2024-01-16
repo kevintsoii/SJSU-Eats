@@ -45,7 +45,8 @@ cur.execute("""
         portion VARCHAR(64),
         ingredients TEXT,
         nutrients JSONB,
-        filters JSONB
+        filters JSONB,
+        image VARCHAR(256)
     );
 """
 )
@@ -63,7 +64,7 @@ cur.execute("""
     DROP TABLE IF EXISTS menus CASCADE;
     CREATE TABLE menus (
         date DATE,
-        meal SMALLINT,
+        meal VARCHAR(10) NOT NULL,
         location VARCHAR(64) REFERENCES locations(name),
         items VARCHAR(64)[],
         PRIMARY KEY(date, meal, location)
