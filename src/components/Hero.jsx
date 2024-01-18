@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 
 const Hero = () => {
   return (
-    <main className="flex flex-col md:flex-row items-center justify-center h-screen w-screen pt-[20px] px-5 md:px-20">
-      <div className="flex flex-1 flex-col justify-center pb-[5%] pr-10 xl:pl-10">
+    <main className="flex flex-col sm:flex-col-reverse md:flex-row items-center justify-center text-center md:text-left min-h-screen min-w-screen py-24 px-5 md:px-20">
+      <div className="flex flex-col flex-1 justify-center md:pb-[5%] md:pr-10 xl:pl-10">
         <h1 className="text-5xl lg:text-6xl font-bold">
           <span className="text-blue">Discover</span> your next meal at SJSU
         </h1>
@@ -19,7 +19,7 @@ const Hero = () => {
 
         <div className="mt-12">
           <Link to="/menu">
-            <button className="inline-flex items-center rounded-full bg-blue px-5 py-2 text-background text-lg font-medium shadow-lg hover:bg-gold hover:text-blue">
+            <button className="inline-flex items-center rounded-full bg-blue shadow-lg text-background text-lg font-medium px-5 py-2 hover:bg-gold hover:text-blue">
               <span>Get Started</span>
               <img src="click.png" className="w-8 pl-2" />
             </button>
@@ -27,9 +27,9 @@ const Hero = () => {
         </div>
       </div>
 
-      <div className="flex md:flex-1 justify-center fade-down xl:mr-10">
+      <div className="hidden sm:flex flex-1 items-center justify-center xl:mr-10 fade-down">
         <img
-          className="border-2 border-gold rounded-lg shadow-lg h-[70%] sm:h-[60%] md:h-auto md:w-full xl:w-5/6"
+          className="border-2 border-gold rounded-lg shadow-lg sm:w-[60%] md:h-auto md:w-full"
           src="/hero.jpg"
           alt="image of SJSU"
         />
