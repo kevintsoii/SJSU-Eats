@@ -13,6 +13,8 @@ load_dotenv()
 
 app = Flask(__name__)
 
+currently_scraping = set()
+
 conn = psycopg2.connect(
     dbname="sjsu_eats",
     host="localhost",
@@ -49,9 +51,16 @@ def get_menus(date):
     rows = cur.fetchall()
 
     if not rows:
-        if scrape_menus(date):
-            cur.execute("SELECT * FROM menus WHERE date = %s;", (date, ))
-            rows = cur.fetchall()
+        if date not in currently_scraping:
+            currently_scraping.add(date)
+            scraped_successfully = scrape_menus(date)
+            currently_scraping.remove(date)
+            if scraped_successfully:
+                cur.execute("SELECT * FROM menus WHERE date = %s;", (date, ))
+                rows = cur.fetchall()
+
+    if not rows:
+        return jsonify({"error": "No menus found for this date."}), 404
     
     item_names = set()
     for row in rows:
