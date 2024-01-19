@@ -33,3 +33,7 @@ body {
 .fade-down {
   animation: fadeDown 1s ease-in-out;
 }
+
+.fade-down-fast {
+  animation: fadeDown 0.5s ease-in-out;
+}

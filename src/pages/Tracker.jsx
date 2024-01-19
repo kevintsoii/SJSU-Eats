@@ -1,7 +1,11 @@
-import React from "react";
+import Header from "../components/Header";
 
 const Tracker = () => {
-  return <div>Tracker</div>;
+  return (
+    <>
+      <Header />
+    </>
+  );
 };
 
 export default Tracker;
