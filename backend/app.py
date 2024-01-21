@@ -5,6 +5,7 @@ import psycopg2
 from psycopg2 import extras
 from dotenv import load_dotenv
 from flask import Flask, jsonify
+from flask_cors import CORS
 
 from scraper.scraper import scrape_menus
 
@@ -12,6 +13,7 @@ from scraper.scraper import scrape_menus
 load_dotenv()
 
 app = Flask(__name__)
+CORS(app)
 
 currently_scraping = set()
 
