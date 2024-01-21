@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import Navbar from "./navbar/Navbar";
-import Menu from "./navbar/Menu";
+import Menu from "./navbar/NavMenu";
 import { useEffect, useState } from "react";
 
 const pages = [
@@ -18,12 +18,12 @@ const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
-  const handleResize = () => {
-    setScreenWidth(window.innerWidth);
-  };
-
   const toggleMenu = () => {
     setShowMenu((prev) => !prev);
+  };
+
+  const handleResize = () => {
+    setScreenWidth(window.innerWidth);
   };
 
   useEffect(() => {
