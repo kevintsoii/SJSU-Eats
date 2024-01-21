@@ -15,7 +15,7 @@ body {
 }
 
 #root {
-  width: 100%;
+  width: 100vw;
   min-height: 100vh;
 }
 
@@ -36,4 +36,8 @@ body {
 
 .fade-down-fast {
   animation: fadeDown 0.5s ease-in-out;
+}
+
+.meal-selector button {
+  transition: background-color 1s;
 }
