@@ -36,6 +36,21 @@ def is_valid_date(date: str) -> bool:
         return False
 
 
+@app.route("/api/items")
+def get_items():
+    """
+    Fetches all items from the database.
+    """
+    cur.execute("SELECT * FROM items;")
+    rows = cur.fetchall()
+
+    items = {
+        row["name"]: {k: v for k, v in row.items() if k != "name"}
+        for row in rows
+    }
+
+    return jsonify(items)
+
 @app.route("/api/menus/<date>")
 def get_menus(date):
     """
