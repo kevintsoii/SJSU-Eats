@@ -25,7 +25,6 @@ conn = psycopg2.connect(
     password=os.getenv("DB_PASSWORD"),
 )
 conn.autocommit = True
-cur = conn.cursor(cursor_factory=extras.RealDictCursor)
 
 
 def is_valid_date(date: str) -> bool:
@@ -41,8 +40,9 @@ def get_items():
     """
     Fetches all items from the database.
     """
-    cur.execute("SELECT * FROM items;")
-    rows = cur.fetchall()
+    with conn.cursor(cursor_factory=extras.RealDictCursor) as cur:
+        cur.execute("SELECT * FROM items;")
+        rows = cur.fetchall()
 
     items = {
         row["name"]: {k: v for k, v in row.items() if k != "name"}
@@ -64,32 +64,35 @@ def get_menus(date):
         return jsonify({"error": "Invalid date format."}), 400
     
     # date, meal, location, items
-    cur.execute("SELECT * FROM menus WHERE date = %s;", (date, ))
-    rows = cur.fetchall()
+    with conn.cursor(cursor_factory=extras.RealDictCursor) as cur:
+        cur.execute("SELECT * FROM menus WHERE date = %s;", (date, ))
+        rows = cur.fetchall()
 
-    if not rows:
-        if date not in currently_scraping:
-            currently_scraping.add(date)
-            scraped_successfully = scrape_menus(date)
-            currently_scraping.remove(date)
-            if scraped_successfully:
-                cur.execute("SELECT * FROM menus WHERE date = %s;", (date, ))
-                rows = cur.fetchall()
+        if not rows:
+            if date not in currently_scraping:
+                currently_scraping.add(date)
+                scraped_successfully = scrape_menus(date)
+                currently_scraping.remove(date)
+                if scraped_successfully:
+                    cur.execute("SELECT * FROM menus WHERE date = %s;", (date, ))
+                    rows = cur.fetchall()
 
-    if not rows:
-        return jsonify({"error": "No menus found for this date."}), 404
-    
-    item_names = set()
-    for row in rows:
-        item_names.update(row["items"])
+        if not rows:
+            return jsonify({"error": "No menus found for this date."}), 404
+        
+        item_names = set()
+        for row in rows:
+            if "items" in row:
+                item_names.update(row["items"])
 
-    if item_names:
-        cur.execute("SELECT * FROM items WHERE name IN %s", (tuple(item_names), ))
-        item_rows = cur.fetchall()
-        item_data = {
-            item_row["name"]: {k: v for k, v in item_row.items() if k != "name"}
-            for item_row in item_rows
-        }
+        if item_names:
+            cur.execute("SELECT * FROM items WHERE name IN %s", (tuple(item_names), ))
+            item_rows = cur.fetchall()
+
+            item_data = {
+                item_row["name"]: {k: v for k, v in item_row.items() if k != "name"}
+                for item_row in item_rows
+            }
     
     menus = {
         "breakfast": {},
@@ -97,8 +100,13 @@ def get_menus(date):
         "dinner": {}
     }
     for row in rows:
-        menus[row["meal"]][row["location"]] = [
-            item_data[item_name] for item_name in row["items"]
-        ]
+        if "items" in row:
+            menus[row["meal"]][row["location"]] = [
+                item_data[item_name] for item_name in row["items"]
+            ]
     
     return jsonify(menus)
+
+if __name__ == "__main__":
+    app.run()
+    
