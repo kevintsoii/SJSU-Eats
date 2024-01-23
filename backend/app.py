@@ -79,21 +79,7 @@ def get_menus(date):
 
         if not rows:
             return jsonify({"error": "No menus found for this date."}), 404
-        
-        item_names = set()
-        for row in rows:
-            if "items" in row:
-                item_names.update(row["items"])
-
-        if item_names:
-            cur.execute("SELECT * FROM items WHERE name IN %s", (tuple(item_names), ))
-            item_rows = cur.fetchall()
-
-            item_data = {
-                item_row["name"]: {k: v for k, v in item_row.items() if k != "name"}
-                for item_row in item_rows
-            }
-    
+      
     menus = {
         "breakfast": {},
         "lunch": {},
@@ -101,9 +87,7 @@ def get_menus(date):
     }
     for row in rows:
         if "items" in row:
-            menus[row["meal"]][row["location"]] = [
-                item_data[item_name] for item_name in row["items"]
-            ]
+            menus[row["meal"]][row["location"]] = row["items"]
     
     return jsonify(menus)
 
