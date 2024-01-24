@@ -8,6 +8,9 @@ import Menus from "../components/menus/Menus";
 import Error from "../components/status/Error";
 import Loading from "../components/status/Loading";
 
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+
 const convrtDateToMeal = (date) => {
   const hour = date.hour();
 
@@ -23,7 +26,7 @@ const fetchData = async (date) => {
 };
 
 const Menu = () => {
-  const [date, setDate] = useState(moment());
+  const [date, setDate] = useState(moment("2023-12-03"));
   const [meal, setMeal] = useState(convrtDateToMeal(date));
 
   const { isLoading, error, data } = useQuery(
@@ -31,10 +34,14 @@ const Menu = () => {
     () => fetchData(date.format("YYYY-MM-DD")),
     {
       staleTime: Infinity,
-      retry: 0,
+      retry: 1,
       refetchOnWindowFocus: false,
     }
   );
+
+  const handleDateChange = (days) => {
+    setDate((date) => date.clone().add(days, "days"));
+  };
 
   const handleMealChange = (e) => {
     setMeal(e.target.textContent);
@@ -44,10 +51,20 @@ const Menu = () => {
     <>
       <Header />
 
-      <div className="mt-20 text-center">
-        <h1 className="text-lg sm:text-3xl pt-10">
+      <div className="flex mt-20 text-center justify-center items-center pt-10">
+        <ArrowBackIcon
+          fontSize="large"
+          className="text-lg cursor-pointer"
+          onClick={() => handleDateChange(-1)}
+        />
+        <h1 className="text-2xl sm:text-3xl px-2 sm:px-5">
           {date.format("dddd, MMMM DD")}
         </h1>
+        <ArrowForwardIcon
+          fontSize="large"
+          className="cursor-pointer"
+          onClick={() => handleDateChange(1)}
+        />
       </div>
 
       <div className="meal-selector flex justify-center mt-4">
@@ -63,8 +80,14 @@ const Menu = () => {
         </div>
       </div>
 
-      <div className="flex justify-center pt-8">
-        {error ? <Error /> : isLoading ? <Loading /> : <Menus />}
+      <div className="flex justify-center pt-2 pb-[6vh]">
+        {error ? (
+          <Error />
+        ) : isLoading ? (
+          <Loading />
+        ) : (
+          <Menus menuData={data[meal.toLowerCase()]} />
+        )}
       </div>
     </>
   );
