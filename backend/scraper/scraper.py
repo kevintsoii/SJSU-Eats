@@ -11,9 +11,9 @@ from dotenv import load_dotenv
 
 API_URL = "https://api.dineoncampus.com/v1/location/5b50c589f3eeb609b36a87eb/periods/%s?platform=0&date=%s"
 MEAL_TYPES = {
-    "64ed07d2351d530789c1010d": "breakfast",
-    "64ed07d2351d530789c10121": "lunch",
-    "64ed07d2351d530789c10117": "dinner"
+    "65aee78dc625af0abff04d7b": "breakfast",
+    "65aee78dc625af0abff04d75": "lunch",
+    "65aee78dc625af0abff04d87": "dinner"
 }
 
 load_dotenv()
