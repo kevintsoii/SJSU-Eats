@@ -34,7 +34,7 @@ const Header = () => {
     <>
       <header className="fixed left-0 right-0 flex items-center justify-between shadow-lg h-20 border-b border-black backdrop-blur-md px-5 md:px-20">
         <Link to="/" className="flex items-center">
-          <img src="/logo.png" alt="logo" className="w-14 h-14 fade-in" />
+          <img src="/logo.png" alt="logo" className="w-14 h-14" />
           <h1 className="text-4xl font-semibold">
             <span className="text-blue">SJSU</span>Eats
           </h1>
