@@ -63,6 +63,12 @@ def get_menus(date):
     if not is_valid_date(date):
         return jsonify({"error": "Invalid date format."}), 400
     
+    menus = {
+        "breakfast": {},
+        "lunch": {},
+        "dinner": {}
+    }
+    
     # date, meal, location, items
     with conn.cursor(cursor_factory=extras.RealDictCursor) as cur:
         cur.execute("SELECT * FROM menus WHERE date = %s;", (date, ))
@@ -76,15 +82,11 @@ def get_menus(date):
                 if scraped_successfully:
                     cur.execute("SELECT * FROM menus WHERE date = %s;", (date, ))
                     rows = cur.fetchall()
+                    menus["new"] = True
 
         if not rows:
             return jsonify({"error": "No menus found for this date."}), 404
       
-    menus = {
-        "breakfast": {},
-        "lunch": {},
-        "dinner": {}
-    }
     for row in rows:
         if "items" in row:
             menus[row["meal"]][row["location"]] = row["items"]
