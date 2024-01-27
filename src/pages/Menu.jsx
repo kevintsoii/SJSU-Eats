@@ -1,6 +1,8 @@
 import moment from "moment";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useQuery } from "react-query";
+
+import { ItemContext } from "../contexts/ItemContext";
 
 import Header from "../components/Header";
 import MealButton from "../components/menus/MealButton";
@@ -19,15 +21,19 @@ const convrtDateToMeal = (date) => {
   else return "Breakfast";
 };
 
-const fetchData = async (date) => {
-  const response = await fetch(`http://localhost:5000/api/menus/${date}`);
-  const data = await response.json();
-  return data;
-};
-
 const Menu = () => {
-  const [date, setDate] = useState(moment("2023-12-03"));
+  const { itemData, fetchItemData } = useContext(ItemContext);
+  const [date, setDate] = useState(moment());
   const [meal, setMeal] = useState(convrtDateToMeal(date));
+
+  const fetchData = async (date) => {
+    const response = await fetch(`http://localhost:5000/api/menus/${date}`);
+    const data = await response.json();
+    if ("new" in data) {
+      await fetchItemData();
+    }
+    return data;
+  };
 
   const { isLoading, error, data } = useQuery(
     ["menus", date.format("YYYY-MM-DD")],
@@ -80,10 +86,10 @@ const Menu = () => {
         </div>
       </div>
 
-      <div className="flex justify-center pt-2 pb-[6vh]">
+      <div className="flex justify-center pt-8 pb-[6vh]">
         {error ? (
           <Error />
-        ) : isLoading ? (
+        ) : isLoading || Object.keys(itemData).length == 0 ? (
           <Loading />
         ) : (
           <Menus menuData={data[meal.toLowerCase()]} />
