@@ -1,6 +1,7 @@
 import Home from "./pages/Home";
 import Menu from "./pages/Menu";
 import Tracker from "./pages/Tracker";
+
 import { ItemContext } from "./contexts/ItemContext";
 
 import { useEffect, useState } from "react";
@@ -10,18 +11,22 @@ import { QueryClient, QueryClientProvider } from "react-query";
 const queryClient = new QueryClient();
 
 function App() {
-  const [data, setData] = useState({});
+  const [itemData, setItemData] = useState({});
+
+  const fetchItemData = async () => {
+    await fetch("http://localhost:5000/api/items")
+      .then((res) => res.json())
+      .then((data) => setItemData(data));
+  };
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/items")
-      .then((res) => res.json())
-      .then((data) => setData(data));
+    fetchItemData();
   }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
-        <ItemContext.Provider value={{ data }}>
+        <ItemContext.Provider value={{ itemData, fetchItemData }}>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/menu" element={<Menu />} />
