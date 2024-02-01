@@ -39,10 +39,10 @@ const Menus = ({ menuData }) => {
         if (items.length > 0)
           return (
             <div key={index} className="flex flex-col pb-6">
-              <h1 className="text-4xl underline decoration-blue decoration-solid underline-offset-8 pb-4">
+              <h1 className="text-4xl underline decoration-blue decoration-solid underline-offset-8 mb-5 leading-snug">
                 {location}
               </h1>
-              <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+              <ul className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
                 {items.map((item, index) => (
                   <Item key={index} location={location} item={item} />
                 ))}
