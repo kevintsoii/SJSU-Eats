@@ -32,6 +32,9 @@ const Menu = () => {
     if ("new" in data) {
       await fetchItemData();
     }
+    if ("error" in data) {
+      throw data.error;
+    }
     return data;
   };
 
@@ -88,7 +91,7 @@ const Menu = () => {
 
       <div className="flex justify-center pt-8 pb-[6vh]">
         {error ? (
-          <Error />
+          <Error message={error} />
         ) : isLoading || Object.keys(itemData).length == 0 ? (
           <Loading />
         ) : (
