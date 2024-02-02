@@ -26,8 +26,11 @@ GOOGLE_IMAGES_API_KEY = os.getenv("GOOGLE_IMAGES_API_KEY")
 GOOGLE_IMAGES_CSE_ID = os.getenv("GOOGLE_IMAGES_CSE_ID")
 
 
-def scrape_image(item_name: str) -> str:
-    response = requests.get(API_URL % (GOOGLE_IMAGES_API_KEY, GOOGLE_IMAGES_CSE_ID, item_name + " plated food image"), timeout=15)
+def scrape_image(item_name: str, offset: bool=False) -> str:
+    if offset:
+        response = requests.get(API_URL % (GOOGLE_IMAGES_API_KEY, GOOGLE_IMAGES_CSE_ID, item_name + " plated food image"), timeout=15)
+    else:
+        response = requests.get(API_URL % (GOOGLE_IMAGES_API_KEY, GOOGLE_IMAGES_CSE_ID, item_name + " plated food image") + "&start=11", timeout=15)
     if "items" not in response.json():
         print("Error:", response.json())
         return ""
@@ -45,7 +48,8 @@ def scrape_image(item_name: str) -> str:
         print(f"Invalid Image: {image['link']}")
     
     if image_data is None:
-        print("Error: No valid images found.")
+        if not offset:
+            return scrape_image(item_name, True)
         return ""
     
     image_name = hashlib.md5(item_name.encode()).hexdigest() + ".jpg"
@@ -61,6 +65,7 @@ def scrape_all_images() -> None:
     cur.execute("SELECT name FROM items WHERE image IS NULL;")
     rows = cur.fetchall()
 
+    print(f"Scraping images for {len(rows)} items.")
     for row in rows:
         print(f"Scraping image for {row['name']}.")
         scrape_image(row["name"])

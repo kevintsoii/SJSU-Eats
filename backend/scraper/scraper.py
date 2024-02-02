@@ -9,7 +9,7 @@ import psycopg2
 import requests
 from dotenv import load_dotenv
 
-from image_scraper import scrape_all_images
+from .image_scraper import scrape_all_images
 
 
 API_URL = "https://api.dineoncampus.com/v1/location/5b50c589f3eeb609b36a87eb/periods/%s?platform=0&date=%s"
@@ -101,7 +101,7 @@ def scrape_menus(date: str) -> bool:
                     (date, meal_type, location_data["name"], items)
                 )
                 scraped = True
-                
+
                 process = Process(target=scrape_all_images)
                 process.start()
             except psycopg2.IntegrityError:
