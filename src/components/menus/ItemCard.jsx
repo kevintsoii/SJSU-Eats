@@ -17,7 +17,11 @@ const ItemCard = ({ item }) => {
         </p>
       </div>
       <img
-        src="https://olo-images-live.imgix.net/f6/f6b3ef9cec68485babdcd1ba802c6bc3.jpg?auto=format%2Ccompress&q=60&cs=tinysrgb&w=1200&h=800&fit=fill&fm=png32&bg=transparent&s=9b56f4cc28a602bd8180b8d8dac53e62"
+        src={
+          itemData[item]["image"]
+            ? "../../src/assets/images/" + itemData[item]["image"]
+            : "../../src/assets/images/no-image.svg"
+        }
         className="w-[35%] object-cover object-center border-l border-gray-500 lg:brightness-90 hover:brightness-100"
       ></img>
     </div>
