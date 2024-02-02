@@ -2,11 +2,14 @@ import os
 import json
 import time
 from typing import Dict, Any
+from multiprocessing import Process
 from datetime import datetime, timedelta
 
 import psycopg2
 import requests
 from dotenv import load_dotenv
+
+from image_scraper import scrape_all_images
 
 
 API_URL = "https://api.dineoncampus.com/v1/location/5b50c589f3eeb609b36a87eb/periods/%s?platform=0&date=%s"
@@ -98,6 +101,9 @@ def scrape_menus(date: str) -> bool:
                     (date, meal_type, location_data["name"], items)
                 )
                 scraped = True
+                
+                process = Process(target=scrape_all_images)
+                process.start()
             except psycopg2.IntegrityError:
                 pass
             conn.commit()
@@ -106,8 +112,8 @@ def scrape_menus(date: str) -> bool:
 
 
 def main():
-    current_date = datetime(2023, 12, 1)
-    end_date = datetime(2024, 12, 15)
+    current_date = datetime(2024, 1, 30)
+    end_date = datetime(2024, 1, 31)
     
     while current_date < end_date:
         print(f'Obtaining menus for {current_date.strftime("%Y-%m-%d")}.')
