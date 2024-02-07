@@ -46,7 +46,8 @@ cur.execute("""
         ingredients TEXT,
         nutrients JSONB,
         filters JSONB,
-        image VARCHAR(256)
+        image VARCHAR(256),
+        image_source VARCHAR(1024)
     );
 """
 )
