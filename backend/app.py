@@ -1,5 +1,6 @@
 import os
 from datetime import datetime
+from multiprocessing import Process
 
 import psycopg2
 from psycopg2 import extras
@@ -8,6 +9,7 @@ from flask import Flask, jsonify
 from flask_cors import CORS
 
 from scraper.scraper import scrape_menus
+from scraper.image_scraper import scrape_all_images
 
 
 load_dotenv()
@@ -79,6 +81,11 @@ def get_menus(date):
                 currently_scraping.add(date)
                 scraped_successfully = scrape_menus(date)
                 currently_scraping.remove(date)
+
+                if len(currently_scraping) == 0:
+                    p = Process(target=scrape_all_images)
+                    p.start()
+
                 if scraped_successfully:
                     cur.execute("SELECT * FROM menus WHERE date = %s;", (date, ))
                     rows = cur.fetchall()

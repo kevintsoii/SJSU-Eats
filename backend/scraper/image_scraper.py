@@ -37,8 +37,9 @@ def scrape_image(item_name: str, offset: bool=False) -> str:
 
     image_data = None
     for image in response.json()["items"]:
+        image_link = image["link"]
         try:
-            image_response = requests.get(image["link"], timeout=5)
+            image_response = requests.get(image_link, timeout=5)
         except:
             continue
 
@@ -56,7 +57,7 @@ def scrape_image(item_name: str, offset: bool=False) -> str:
     with open(f"src/assets/images/{image_name}", "wb") as image_file:
         image_file.write(image_data)
     print(f"Image saved: {image_name}.")
-    cur.execute("UPDATE items SET image = %s WHERE name = %s;", (image_name, item_name))
+    cur.execute("UPDATE items SET image = %s, image_source = %s WHERE name = %s;", (image_name, image_link, item_name))
 
     return image_name
 
