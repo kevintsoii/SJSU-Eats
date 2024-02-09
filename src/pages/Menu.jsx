@@ -77,7 +77,7 @@ const Menu = () => {
       <span className="block mt-20"></span>
 
       {warning && (
-        <div className="flex text-center justify-center items-center pt-10">
+        <div className="flex text-center justify-center items-center pt-8">
           <div className="flex bg-gold/30 rounded-lg border border-gold border-[1.75px] max-w-[80%] px-5 py-3 items-center justify-center">
             <h1 className="pr-[3px]">
               Images are from the Google Search API and may not be fully
@@ -92,7 +92,7 @@ const Menu = () => {
         </div>
       )}
 
-      <div className="flex text-center justify-center items-center pt-10">
+      <div className="flex text-center justify-center items-center pt-8">
         <ArrowBackIcon
           fontSize="large"
           className="text-lg cursor-pointer"
@@ -121,7 +121,7 @@ const Menu = () => {
         </div>
       </div>
 
-      <div className="flex justify-center pt-8 pb-[6vh]">
+      <div className="flex justify-center pt-4 pb-[6vh]">
         {error ? (
           <Error message={error} />
         ) : isLoading || Object.keys(itemData).length == 0 ? (
