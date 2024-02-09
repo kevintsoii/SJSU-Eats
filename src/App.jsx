@@ -1,12 +1,14 @@
-import Home from "./pages/Home";
-import Menu from "./pages/Menu";
-import Tracker from "./pages/Tracker";
-
-import { ItemContext } from "./contexts/ItemContext";
-
+import { Provider } from "react-redux";
 import { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
+
+import store from "./store";
+import { ItemContext } from "./contexts/ItemContext";
+
+import Home from "./pages/Home";
+import Menu from "./pages/Menu";
+import Tracker from "./pages/Tracker";
 
 const queryClient = new QueryClient();
 
@@ -24,17 +26,19 @@ function App() {
   }, []);
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <ItemContext.Provider value={{ itemData, fetchItemData }}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/menu" element={<Menu />} />
-            <Route path="/tracker" element={<Tracker />} />
-          </Routes>
-        </ItemContext.Provider>
-      </BrowserRouter>
-    </QueryClientProvider>
+    <Provider store={store}>
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>
+          <ItemContext.Provider value={{ itemData, fetchItemData }}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/menu" element={<Menu />} />
+              <Route path="/tracker" element={<Tracker />} />
+            </Routes>
+          </ItemContext.Provider>
+        </BrowserRouter>
+      </QueryClientProvider>
+    </Provider>
   );
 }
 

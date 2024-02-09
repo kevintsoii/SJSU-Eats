@@ -1,8 +1,10 @@
 import moment from "moment";
-import { useState, useContext, useEffect } from "react";
 import { useQuery } from "react-query";
+import { useSelector, useDispatch } from "react-redux";
+import { useState, useContext, useEffect } from "react";
 
 import { ItemContext } from "../contexts/ItemContext";
+import { add, remove, removeAll, selectItems } from "../features/itemsSlice";
 
 import Header from "../components/Header";
 import MealButton from "../components/menus/MealButton";
@@ -24,8 +26,13 @@ const convrtDateToMeal = (date) => {
 
 const Menu = () => {
   const { itemData, fetchItemData } = useContext(ItemContext);
+
   const [date, setDate] = useState(moment());
   const [meal, setMeal] = useState(convrtDateToMeal(date));
+
+  const items = useSelector(selectItems);
+  const dispatch = useDispatch();
+
   const [warning, setWarning] = useState(false);
 
   const fetchData = async (date) => {
@@ -67,7 +74,10 @@ const Menu = () => {
 
   const handleWarningDismiss = () => {
     localStorage.setItem("warningDismissed", true);
-    setWarning(false);
+    setWarning(null);
+    setTimeout(() => {
+      setWarning(false);
+    }, 1000);
   };
 
   return (
@@ -76,12 +86,17 @@ const Menu = () => {
 
       <span className="block mt-20"></span>
 
-      {warning && (
-        <div className="flex text-center justify-center items-center pt-8">
+      {warning !== false && (
+        <div
+          className="flex text-center justify-center pt-8 items-center"
+          style={{
+            opacity: warning == null ? "0" : "1",
+            transition: warning == null ? "opacity 1s ease-out" : "",
+          }}
+        >
           <div className="flex bg-gold/30 rounded-lg border border-gold border-[1.75px] max-w-[80%] px-5 py-3 items-center justify-center">
             <h1 className="pr-[3px]">
-              Images are from the Google Search API and may not be fully
-              accurate
+              Images are from the Google Search API and are not fully accurate
             </h1>
             <CloseIcon
               fontSize="medium"
