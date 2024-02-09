@@ -1,5 +1,5 @@
 import moment from "moment";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useQuery } from "react-query";
 
 import { ItemContext } from "../contexts/ItemContext";
@@ -12,6 +12,7 @@ import Loading from "../components/status/Loading";
 
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import CloseIcon from "@mui/icons-material/Close";
 
 const convrtDateToMeal = (date) => {
   const hour = date.hour();
@@ -25,6 +26,7 @@ const Menu = () => {
   const { itemData, fetchItemData } = useContext(ItemContext);
   const [date, setDate] = useState(moment());
   const [meal, setMeal] = useState(convrtDateToMeal(date));
+  const [warning, setWarning] = useState(false);
 
   const fetchData = async (date) => {
     const response = await fetch(`http://localhost:5000/api/menus/${date}`);
@@ -48,6 +50,13 @@ const Menu = () => {
     }
   );
 
+  useEffect(() => {
+    const warningDismissed = localStorage.getItem("warningDismissed");
+    if (!warningDismissed) {
+      setWarning(true);
+    }
+  }, []);
+
   const handleDateChange = (days) => {
     setDate((date) => date.clone().add(days, "days"));
   };
@@ -56,11 +65,34 @@ const Menu = () => {
     setMeal(e.target.textContent);
   };
 
+  const handleWarningDismiss = () => {
+    localStorage.setItem("warningDismissed", true);
+    setWarning(false);
+  };
+
   return (
     <>
       <Header />
 
-      <div className="flex mt-20 text-center justify-center items-center pt-10">
+      <span className="block mt-20"></span>
+
+      {warning && (
+        <div className="flex text-center justify-center items-center pt-10">
+          <div className="flex bg-gold/30 rounded-lg border border-gold border-[1.75px] max-w-[80%] px-5 py-3 items-center justify-center">
+            <h1 className="pr-[3px]">
+              Images are from the Google Search API and may not be fully
+              accurate
+            </h1>
+            <CloseIcon
+              fontSize="medium"
+              className="pt-[1.5px] text-gray-500 hover:text-red-700 hover:cursor-pointer"
+              onClick={handleWarningDismiss}
+            />
+          </div>
+        </div>
+      )}
+
+      <div className="flex text-center justify-center items-center pt-10">
         <ArrowBackIcon
           fontSize="large"
           className="text-lg cursor-pointer"
