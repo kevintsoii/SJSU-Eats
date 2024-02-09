@@ -17,13 +17,14 @@ const ItemCard = ({ item }) => {
         </p>
       </div>
       <img
+        key={item}
         src={
           itemData[item]["image"]
             ? "../../src/assets/images/" + itemData[item]["image"]
             : "../../src/assets/images/no-image.svg"
         }
         loading="lazy"
-        className="w-[35%] object-cover object-center border-l border-gray-500 lg:brightness-90 hover:brightness-100"
+        className="w-[35%] object-cover object-center border-l border-gray-500 lg:brightness-90 hover:brightness-100 fade-in"
       ></img>
     </div>
   );

@@ -66,7 +66,7 @@ const Menu = () => {
           className="text-lg cursor-pointer"
           onClick={() => handleDateChange(-1)}
         />
-        <h1 className="text-2xl sm:text-3xl px-2 sm:px-5">
+        <h1 className="text-2xl sm:text-3xl px-2 sm:px-5 sm:min-w-[33%] xl:min-w-[20%]">
           {date.format("dddd, MMMM DD")}
         </h1>
         <ArrowForwardIcon
