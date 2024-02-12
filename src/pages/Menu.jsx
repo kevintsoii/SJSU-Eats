@@ -1,10 +1,8 @@
 import moment from "moment";
 import { useQuery } from "react-query";
-import { useSelector, useDispatch } from "react-redux";
 import { useState, useContext, useEffect } from "react";
 
 import { ItemContext } from "../contexts/ItemContext";
-import { add, remove, removeAll, selectItems } from "../features/itemsSlice";
 
 import Header from "../components/Header";
 import MealButton from "../components/menus/MealButton";
@@ -29,9 +27,6 @@ const Menu = () => {
 
   const [date, setDate] = useState(moment());
   const [meal, setMeal] = useState(convrtDateToMeal(date));
-
-  const items = useSelector(selectItems);
-  const dispatch = useDispatch();
 
   const [warning, setWarning] = useState(false);
 
