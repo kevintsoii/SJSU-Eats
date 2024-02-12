@@ -19,6 +19,18 @@ body {
   min-height: 100vh;
 }
 
+.meal-selector button {
+  transition: background-color 1s;
+}
+
+.shrink-button {
+  animation: transform 0.5s ease-in-out;
+}
+
+.shrink-button:active {
+  transform: scale(0.9);
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -49,10 +61,6 @@ body {
 
 .fade-down-fast {
   animation: fadeDown 0.5s ease-in-out;
-}
-
-.meal-selector button {
-  transition: background-color 1s;
 }
 
 .dot {
