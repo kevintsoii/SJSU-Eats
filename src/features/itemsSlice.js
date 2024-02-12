@@ -4,9 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export const itemsSlice = createSlice({
   name: "items",
-  initialState: {
-    items: [],
-  },
+  initialState: [],
   reducers: {
     add: (state, action) => {
       state.push(action.payload);
@@ -23,6 +21,6 @@ export const itemsSlice = createSlice({
 
 export const { add, remove, removeAll } = itemsSlice.actions;
 
-export const selectItems = (state) => state.items.items;
+export const selectItems = (state) => state.items;
 
 export default itemsSlice.reducer;
