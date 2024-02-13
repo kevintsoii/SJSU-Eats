@@ -4,22 +4,28 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export const itemsSlice = createSlice({
   name: "items",
-  initialState: [],
+  initialState: {},
   reducers: {
     add: (state, action) => {
-      state.push(action.payload);
+      state[action.payload] = (state[action.payload] || 0) + 1;
     },
     remove: (state, action) => {
-      const index = state.indexOf(action.payload);
-      if (index > -1) state.splice(index, 1);
+      if (state[action.payload] > 1) {
+        state[action.payload] -= 1;
+      } else {
+        delete state[action.payload];
+      }
     },
     removeAll: (state, action) => {
-      state = state.filter((item) => item !== action.payload);
+      delete state[action.payload];
+    },
+    clear: () => {
+      return {};
     },
   },
 });
 
-export const { add, remove, removeAll } = itemsSlice.actions;
+export const { add, remove, removeAll, clear } = itemsSlice.actions;
 
 export const selectItems = (state) => state.items;
 
