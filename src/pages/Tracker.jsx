@@ -1,22 +1,22 @@
 import Header from "../components/Header";
-
-import { add, remove, removeAll, selectItems } from "../features/itemsSlice";
-import { useDispatch, useSelector } from "react-redux";
+import Table from "../components/tracker/Table";
 
 const Tracker = () => {
-  const items = useSelector(selectItems);
-
-  console.log(items);
-
   return (
     <>
       <Header />
 
       <span className="block mt-20"></span>
 
-      <div>
-        <h1 className="text-5xl">Track your Nutrients!</h1>
-      </div>
+      <main className="tracker flex flex-col text-center justify-center place-items-center pt-10">
+        <h1 className="text-5xl font-semibold">
+          <span className="text-blue">Track</span> your Nutrients!
+        </h1>
+
+        <hr className="border-black w-[90%] my-6" />
+
+        <Table />
+      </main>
     </>
   );
 };

@@ -131,7 +131,7 @@ const Menu = () => {
         </div>
       </div>
 
-      <div className="flex justify-center pt-4 pb-[6vh]">
+      <main className="flex justify-center pt-4 pb-[6vh]">
         {error ? (
           <Error message={error} />
         ) : isLoading || Object.keys(itemData).length == 0 ? (
@@ -139,7 +139,7 @@ const Menu = () => {
         ) : (
           <Menus menuData={data[meal.toLowerCase()]} />
         )}
-      </div>
+      </main>
     </>
   );
 };
