@@ -2,10 +2,12 @@ import PropTypes from "prop-types";
 
 import { Link } from "react-router-dom";
 
-const NavbarItem = ({ to, text, classes }) => {
+const NavbarItem = ({ to, text }) => {
   return (
-    <li className={`text-xl py-1 px-3 h-50 ${classes}`}>
-      <Link to={to}>{text}</Link>
+    <li className="text-xl h-50">
+      <Link to={to} className="py-1 px-3 rounded-full hover:bg-gold">
+        {text}
+      </Link>
     </li>
   );
 };
@@ -13,7 +15,6 @@ const NavbarItem = ({ to, text, classes }) => {
 NavbarItem.propTypes = {
   to: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
-  classes: PropTypes.string,
 };
 
 export default NavbarItem;
