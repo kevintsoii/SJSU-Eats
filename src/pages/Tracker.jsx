@@ -13,7 +13,7 @@ const Tracker = () => {
           <span className="text-blue">Track</span> your Nutrients!
         </h1>
 
-        <hr className="border-black w-[90%] my-6" />
+        <hr className="border-black w-[60%] my-6" />
 
         <Table />
       </main>
