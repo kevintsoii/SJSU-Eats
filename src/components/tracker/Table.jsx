@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import { useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -114,11 +113,6 @@ const Table = () => {
       </div>
     </>
   );
-};
-
-Table.propTypes = {
-  items: PropTypes.object.isRequired,
-  data: PropTypes.object.isRequired,
 };
 
 export default Table;

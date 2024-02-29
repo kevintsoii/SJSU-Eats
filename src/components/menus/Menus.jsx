@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 
-import Item from "./Item.jsx";
+import ItemCard from "./ItemCard";
+import SimpleItemCard from "./SimpleItemCard";
 
 const formatData = (menuData) => {
   let newData = {};
@@ -44,7 +45,13 @@ const Menus = ({ menuData }) => {
               </h1>
               <ul className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
                 {items.map((item, index) => (
-                  <Item key={index} location={location} item={item} />
+                  <li key={index} className="overflow-hidden">
+                    {["Nook", "Salad Bar"].includes(location) ? (
+                      <SimpleItemCard item={item} />
+                    ) : (
+                      <ItemCard item={item} />
+                    )}
+                  </li>
                 ))}
               </ul>
             </div>
