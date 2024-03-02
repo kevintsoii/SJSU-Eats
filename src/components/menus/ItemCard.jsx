@@ -1,9 +1,11 @@
-import { useContext } from "react";
+import { useState, useContext } from "react";
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 
 import { add } from "../../features/itemsSlice";
 import { ItemContext } from "../../contexts/ItemContext";
+
+import { Popup } from "./InfoPopup";
 
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import InfoIcon from "@mui/icons-material/Info";
@@ -12,8 +14,29 @@ const ItemCard = ({ item }) => {
   const dispatch = useDispatch();
   const { itemData } = useContext(ItemContext);
 
+  const [popupEnabled, setPopupEnabled] = useState(false);
+
   const handleAdd = () => {
     dispatch(add(item));
+  };
+
+  const handleOpen = () => {
+    setPopupEnabled(true);
+
+    const scrollY = document.documentElement.scrollTop;
+    window.onscroll = function () {
+      window.scrollTo(0, scrollY);
+    };
+  };
+
+  const handleClose = (event) => {
+    if (
+      event.target.classList.contains("overlay") ||
+      event.target.classList.contains("overlay-close")
+    ) {
+      setPopupEnabled(false);
+      window.onscroll = function () {};
+    }
   };
 
   return (
@@ -29,7 +52,10 @@ const ItemCard = ({ item }) => {
         </div>
         <div className="mb-1">
           <button className="shrink-button">
-            <InfoIcon style={{ fontSize: "26px", color: "#024e99" }} />
+            <InfoIcon
+              onClick={handleOpen}
+              style={{ fontSize: "26px", color: "#024e99" }}
+            />
           </button>
           <button onClick={handleAdd} className="shrink-button ml-1">
             <AddCircleOutlineIcon
@@ -48,6 +74,7 @@ const ItemCard = ({ item }) => {
         loading="lazy"
         className="w-[35%] object-cover object-center border-l border-gray-500 lg:brightness-90 hover:brightness-100 fade-in"
       ></img>
+      <Popup enabled={popupEnabled} onClose={handleClose} />
     </div>
   );
 };
