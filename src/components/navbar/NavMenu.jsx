@@ -4,7 +4,7 @@ import NavbarItem from "./NavbarItem";
 const Menu = ({ pages }) => {
   return (
     <>
-      <ul className="fixed bg-background border-b border-black shadow-lg w-full mt-20 fade-down-fast ">
+      <ul className="fixed bg-background border-b border-black w-full mt-20 fade-down-fast ">
         {Object.keys(pages).map((key) => (
           <NavbarItem
             key={key}

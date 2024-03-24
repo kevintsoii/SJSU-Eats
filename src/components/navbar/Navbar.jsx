@@ -12,7 +12,7 @@ const Navbar = ({ screenWidth, pages, onToggle }) => {
         </ul>
       ) : (
         <button onClick={onToggle} className="">
-          <img src="/menu.svg" className="w-10"></img>
+          <img src="/menu.svg" className="w-8"></img>
         </button>
       )}
     </nav>
