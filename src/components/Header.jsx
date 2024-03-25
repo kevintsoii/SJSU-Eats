@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import Navbar from "./navbar/Navbar";
-import Menu from "./navbar/NavMenu";
+import Menu from "./navbar/MobileMenu";
 import { useEffect, useState } from "react";
 
 const pages = [
@@ -35,7 +35,7 @@ const Header = () => {
       <header className="z-10 fixed left-0 right-0 flex items-center justify-between shadow-lg h-20 border-b border-black backdrop-blur-xl px-5 md:px-20">
         <Link to="/" className="flex items-center">
           <img src="/logo.png" alt="logo" className="w-12 h-12" />
-          <h1 className="text-3xl font-semibold ml-2">
+          <h1 className="text-3xl font-semibold ml-1">
             <span className="text-blue">SJSU</span>Eats
           </h1>
         </Link>
@@ -45,7 +45,9 @@ const Header = () => {
           onToggle={toggleMenu}
         />
       </header>
-      {screenWidth < 640 && showMenu && <Menu pages={{ ...pages }} />}
+      {screenWidth < 640 && showMenu && (
+        <Menu pages={{ ...pages }} onToggle={toggleMenu} />
+      )}
     </>
   );
 };
