@@ -5,9 +5,11 @@ const Navbar = ({ screenWidth, pages, onToggle }) => {
   return (
     <nav className="flex">
       {screenWidth >= 640 ? (
-        <ul className="flex items-center font-medium">
+        <ul className="flex items-center justify-between font-medium">
           {Object.keys(pages).map((key) => (
-            <NavbarItem key={key} to={pages[key].path} text={pages[key].name} />
+            <li key={key}>
+              <NavbarItem to={pages[key].path} text={pages[key].name} />
+            </li>
           ))}
         </ul>
       ) : (

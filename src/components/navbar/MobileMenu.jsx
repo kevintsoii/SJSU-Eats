@@ -1,10 +1,13 @@
 import PropTypes from "prop-types";
 import NavbarItem from "./NavbarItem";
 
-const Menu = ({ pages }) => {
+const Menu = ({ pages, onToggle }) => {
   return (
     <>
-      <ul className="fixed bg-background border-b border-black w-full mt-20 fade-down-fast ">
+      <ul
+        className="fixed bg-background border-b border-black z-10 w-full mt-20 h-full"
+        onClick={onToggle}
+      >
         {Object.keys(pages).map((key) => (
           <NavbarItem
             key={key}
@@ -23,6 +26,7 @@ Menu.propTypes = {
     name: PropTypes.string,
     path: PropTypes.string,
   }),
+  onToggle: PropTypes.func,
 };
 
 export default Menu;
