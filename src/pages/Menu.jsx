@@ -105,10 +105,10 @@ const Menu = () => {
       <div className="flex text-center justify-center items-center pt-8">
         <ArrowBackIcon
           fontSize="large"
-          className="text-lg cursor-pointer"
+          className="cursor-pointer"
           onClick={() => handleDateChange(-1)}
         />
-        <h1 className="text-2xl sm:text-3xl px-2 sm:px-5 sm:min-w-[33%] xl:min-w-[20%]">
+        <h1 className="text-2xl sm:text-3xl px-5 sm:min-w-[33%] xl:min-w-[20%]">
           {date.format("dddd, MMMM DD")}
         </h1>
         <ArrowForwardIcon

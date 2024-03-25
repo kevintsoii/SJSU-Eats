@@ -9,11 +9,11 @@ const Tracker = () => {
       <span className="block mt-20"></span>
 
       <main className="tracker flex flex-col text-center justify-center place-items-center pt-10">
-        <h1 className="text-5xl font-semibold">
+        <h1 className="text-4xl lg:text-5xl font-semibold">
           <span className="text-blue">Track</span> your Nutrients!
         </h1>
 
-        <hr className="border-black w-[60%] my-6" />
+        <hr className="border-black w-[80%] md:w-[60%] my-6" />
 
         <Table />
       </main>
