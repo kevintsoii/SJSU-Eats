@@ -47,7 +47,8 @@ const Menu = () => {
     () => fetchData(date.format("YYYY-MM-DD")),
     {
       staleTime: Infinity,
-      retry: 1,
+      retry: (failureCount, error) =>
+        error.includes("No menus found") ? false : failureCount < 1,
       refetchOnWindowFocus: false,
     }
   );
