@@ -82,9 +82,17 @@ def scrape_menus(date: str) -> bool:
     scraped = False
 
     for meal_hash, meal_type in MEAL_TYPES.items():
-        response = requests.get(API_URL % (meal_hash, date))
+        response = requests.get(
+            API_URL % (meal_hash, date),
+            headers = {
+                "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1"
+            }
+        )
         data = response.json()
         
+        if data["closed"]:
+            continue
+
         for location_data in data["menu"]["periods"]["categories"]:
             items = []
             add_location(location_data)
