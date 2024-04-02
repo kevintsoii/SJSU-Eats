@@ -82,18 +82,18 @@ def get_menus(date):
                 scraped_successfully = scrape_menus(date)
                 currently_scraping.remove(date)
 
-                if len(currently_scraping) == 0:
-                    p = Process(target=scrape_all_images)
-                    p.start()
-
                 if scraped_successfully:
                     cur.execute("SELECT * FROM menus WHERE date = %s;", (date, ))
                     rows = cur.fetchall()
                     menus["new"] = True
 
+                    if len(currently_scraping) == 0:
+                        p = Process(target=scrape_all_images)
+                        p.start()
+
         if not rows:
             return jsonify({"error": "No menus found for this date."}), 404
-      
+
     for row in rows:
         if "items" in row:
             menus[row["meal"]][row["location"]] = row["items"]
