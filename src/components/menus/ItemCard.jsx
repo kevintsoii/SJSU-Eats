@@ -32,7 +32,9 @@ const ItemCard = ({ item }) => {
   const handleClose = (event) => {
     if (
       event.target.classList.contains("overlay") ||
-      event.target.classList.contains("overlay-close")
+      event.target.classList.contains("overlay-close") ||
+      (event.target.nodeName === "path" &&
+        event.target.parentNode.classList.contains("overlay-close"))
     ) {
       setPopupEnabled(false);
       window.onscroll = function () {};
@@ -74,7 +76,11 @@ const ItemCard = ({ item }) => {
         loading="lazy"
         className="w-[35%] object-cover object-center border-l border-gray-500 lg:brightness-90 hover:brightness-100 fade-in"
       ></img>
-      <Popup enabled={popupEnabled} onClose={handleClose} />
+      <Popup
+        enabled={popupEnabled}
+        onClose={handleClose}
+        data={{ ...itemData[item], name: item }}
+      />
     </div>
   );
 };
