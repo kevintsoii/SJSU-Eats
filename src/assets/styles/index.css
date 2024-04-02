@@ -19,6 +19,24 @@ body {
   min-height: 100vh;
 }
 
+::-webkit-scrollbar {
+  display: none;
+}
+
+.modal::-webkit-scrollbar {
+  display: block;
+  width: 8px;
+}
+
+.modal::-webkit-scrollbar-thumb {
+  background-color: rgba(59, 59, 59, 0.66);
+  border-radius: 10px;
+}
+
+.modal::-webkit-scrollbar-track {
+  background-color: rgba(59, 59, 59, 0.33);
+}
+
 .meal-selector button {
   transition: background-color 1s;
 }
