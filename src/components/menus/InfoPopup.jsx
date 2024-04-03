@@ -7,6 +7,8 @@ import CloseIcon from "@mui/icons-material/Close";
 const InfoPopup = ({ enabled, onClose, data }) => {
   if (!enabled) return null;
 
+  console.log(data);
+
   return (
     <div
       className="overlay fixed flex top-0 left-0 w-screen h-screen bg-black/40 justify-center items-center z-20"
@@ -58,7 +60,7 @@ const InfoPopup = ({ enabled, onClose, data }) => {
             </>
           )}
           <h2 className="text-xl mt-1 font-medium">Nutrients</h2>
-          <ul className="ml-6">
+          <ul className="ml-6 mb-3">
             {Object.entries(data["nutrients"])
               .filter(
                 ([, value]) =>
@@ -71,6 +73,15 @@ const InfoPopup = ({ enabled, onClose, data }) => {
                 </li>
               ))}
           </ul>
+
+          <a
+            href={data["image_source"]}
+            target="_blank"
+            rel="noreferrer"
+            className="text-blue underline"
+          >
+            Image Source
+          </a>
         </div>
       </div>
     </div>
