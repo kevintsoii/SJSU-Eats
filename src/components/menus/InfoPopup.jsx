@@ -31,7 +31,7 @@ const InfoPopup = ({ enabled, onClose, data }) => {
                 : "../../src/assets/images/no-image.svg"
             }
             loading="lazy"
-            className="w-[35%] h-[50%] object-cover object-center border border-gray-500 lg:brightness-90"
+            className="w-full sm:w-[70%] md:w-[50%] xl:w-[40%] h-[35%] sm:h-[50%] object-cover object-center border border-gray-500 lg:brightness-90"
           ></img>
 
           <h1 className="text-2xl font-medium mt-4 text-gray-800">
@@ -41,7 +41,7 @@ const InfoPopup = ({ enabled, onClose, data }) => {
             <h2 className="text-lg mt-1">{data["description"]}</h2>
           )}
 
-          <div className="flex gap-x-2 my-3 ml-[-5px]">
+          <div className="flex flex-wrap gap-2 my-3 ml-[-5px]">
             {data["filters"].map((filter, index) => (
               <Filter key={index} text={filter} />
             ))}
