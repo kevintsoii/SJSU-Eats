@@ -13,7 +13,7 @@ const Menu = ({ pages, onToggle }) => {
             key={key}
             to={pages[key].path}
             text={pages[key].name}
-            classes="border-b border-black/25 text-center"
+            classes="border-b border-black/25 text-center py-2"
           />
         ))}
       </ul>

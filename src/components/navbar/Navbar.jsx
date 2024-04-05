@@ -8,7 +8,11 @@ const Navbar = ({ screenWidth, pages, onToggle }) => {
         <ul className="flex items-center justify-between font-medium">
           {Object.keys(pages).map((key) => (
             <li key={key}>
-              <NavbarItem to={pages[key].path} text={pages[key].name} />
+              <NavbarItem
+                to={pages[key].path}
+                text={pages[key].name}
+                classes="rounded-full"
+              />
             </li>
           ))}
         </ul>
