@@ -8,6 +8,8 @@ import { ItemContext } from "./contexts/ItemContext";
 
 import Home from "./pages/Home";
 import Menu from "./pages/Menu";
+import Search from "./pages/Search";
+import Location from "./pages/Location";
 import Tracker from "./pages/Tracker";
 
 const queryClient = new QueryClient();
@@ -33,6 +35,8 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/menu" element={<Menu />} />
+              <Route path="/search" element={<Search />} />
+              <Route path="/location" element={<Location />} />
               <Route path="/tracker" element={<Tracker />} />
             </Routes>
           </ItemContext.Provider>

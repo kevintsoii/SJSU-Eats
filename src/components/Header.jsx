@@ -9,6 +9,14 @@ const pages = [
     path: "/menu",
   },
   {
+    name: "Search",
+    path: "/search",
+  },
+  {
+    name: "Location",
+    path: "/location",
+  },
+  {
     name: "Calorie Tracker",
     path: "/tracker",
   },
