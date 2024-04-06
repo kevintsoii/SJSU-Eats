@@ -28,5 +28,10 @@ export const itemsSlice = createSlice({
 export const { add, remove, removeAll, clear } = itemsSlice.actions;
 
 export const selectItems = (state) => state.items;
+export const selectSize = (state) =>
+  Object.values(state.items).reduce(
+    (accumulator, current) => accumulator + current,
+    0
+  );
 
 export default itemsSlice.reducer;
