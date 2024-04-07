@@ -72,13 +72,17 @@ def get_search_results(query):
         return jsonify({})
     
     with conn.cursor(cursor_factory=extras.RealDictCursor) as cur:
-        cur.execute("SELECT date, meal, item FROM menus, UNNEST(items) AS item WHERE item ILIKE %s "
+        cur.execute("SELECT date, item FROM menus, UNNEST(items) AS item WHERE item ILIKE %s "
                     "AND date BETWEEN CURRENT_DATE AND (CURRENT_DATE + interval '1 month') ORDER BY date LIMIT 100;", 
                     (f"%{query}%", ))
         rows = cur.fetchall()
 
-    rows = sorted(rows, key=meal_key)
-    return jsonify(rows)
+    #rows = sorted(rows, key=meal_key)
+    data = {}
+    for row in rows:
+        data.setdefault(str(row["date"]), set()).add(row["item"])
+    data = {date: list(items) for date, items in data.items()}
+    return jsonify(data)
 
 
 @app.route("/api/menus/<date>")
@@ -120,7 +124,7 @@ def get_menus(date):
                         p.start()
 
         if not rows:
-            return jsonify({"error": "No menus found for this date."}), 404
+            return jsonify({"error": "No menus found for this date."})
 
     for row in rows:
         if "items" in row:
