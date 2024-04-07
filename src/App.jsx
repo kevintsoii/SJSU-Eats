@@ -18,7 +18,7 @@ function App() {
   const [itemData, setItemData] = useState({});
 
   const fetchItemData = async () => {
-    await fetch("http://localhost:5000/api/items")
+    await fetch(`${import.meta.env.VITE_API_URL}/api/items`)
       .then((res) => res.json())
       .then((data) => setItemData(data));
   };

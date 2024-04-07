@@ -19,7 +19,9 @@ const Search = () => {
       throw "Search query must be at most 50 characters long.";
     }
 
-    const response = await fetch(`http://localhost:5000/api/search/${query}`);
+    const response = await fetch(
+      `${import.meta.env.VITE_API_URL}/api/search/${query}`
+    );
     const data = await response.json();
     return data;
   };
