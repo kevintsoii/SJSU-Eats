@@ -31,7 +31,9 @@ const Menu = () => {
   const [warning, setWarning] = useState(false);
 
   const fetchData = async (date) => {
-    const response = await fetch(`http://localhost:5000/api/menus/${date}`);
+    const response = await fetch(
+      `${import.meta.env.VITE_API_URL}/api/menus/${date}`
+    );
     const data = await response.json();
     if ("new" in data) {
       await fetchItemData();
