@@ -21,7 +21,6 @@ const Search = () => {
 
     const response = await fetch(`http://localhost:5000/api/search/${query}`);
     const data = await response.json();
-    console.log(data);
     return data;
   };
 
