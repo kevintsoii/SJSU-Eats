@@ -11,7 +11,7 @@ const SearchForm = ({ onSubmit }) => {
     <>
       <div className="flex flex-col justify-center mt-8">
         <form
-          className="flex flex-row bg-background border border-black mx-auto rounded-lg overflow-hidden focus-within:ring-sky-600/50 focus-within:ring-1"
+          className="flex flex-row bg-background border border-black mx-auto rounded-lg overflow-hidden md:w-[50%] xl:w-[33%] focus-within:ring-sky-600/50 focus-within:ring-1"
           onSubmit={(e) => {
             e.preventDefault();
             setInputText("");
@@ -24,7 +24,7 @@ const SearchForm = ({ onSubmit }) => {
           }}
         >
           <input
-            className="bg-inherit py-2 px-3 w-96 focus:outline-none placeholder:text-gray-600 placeholder:italic"
+            className="bg-inherit py-2 px-3 grow focus:outline-none placeholder:text-gray-600 placeholder:italic"
             type="text"
             placeholder="Item name"
             value={inputText}

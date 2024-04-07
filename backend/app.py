@@ -37,15 +37,6 @@ def is_valid_date(date: str) -> bool:
         return False
 
 
-def meal_key(item: dict):
-    meal_dict = {
-        "breakfast": 0,
-        "lunch": 1,
-        "dinner": 2,
-    }
-    return item["date"], meal_dict[item["meal"]]
-
-
 @app.route("/api/items")
 def get_items():
     """
@@ -77,7 +68,6 @@ def get_search_results(query):
                     (f"%{query}%", ))
         rows = cur.fetchall()
 
-    #rows = sorted(rows, key=meal_key)
     data = {}
     for row in rows:
         data.setdefault(str(row["date"]), set()).add(row["item"])
