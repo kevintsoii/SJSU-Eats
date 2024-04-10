@@ -27,11 +27,7 @@ const InfoPopup = ({ enabled, onClose, data }) => {
           </button>
 
           <img
-            src={
-              data["image"]
-                ? "../../src/assets/images/" + data["image"]
-                : "../../src/assets/images/no-image.svg"
-            }
+            src={data["image"] ? "/" + data["image"] : "/no-image.svg"}
             loading="lazy"
             className="w-full sm:w-[70%] md:w-[50%] xl:w-[40%] h-[35%] sm:h-[50%] object-cover object-center border border-gray-500 lg:brightness-90"
           ></img>
