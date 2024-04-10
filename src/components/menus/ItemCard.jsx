@@ -70,8 +70,8 @@ const ItemCard = ({ item }) => {
         key={item}
         src={
           itemData[item]["image"]
-            ? "../../src/assets/images/" + itemData[item]["image"]
-            : "../../src/assets/images/no-image.svg"
+            ? "/" + itemData[item]["image"]
+            : "/no-image.svg"
         }
         loading="lazy"
         className="w-[35%] object-cover object-center border-l border-gray-500 lg:brightness-90 hover:brightness-100 fade-in"
