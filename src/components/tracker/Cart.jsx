@@ -41,8 +41,8 @@ const Cart = () => {
             <img
               src={
                 itemData[item]["image"]
-                  ? "/" + itemData[item]["image"]
-                  : "/no-image.svg"
+                  ? "/images/" + itemData[item]["image"]
+                  : "/images/no-image.svg"
               }
               loading="lazy"
               className="fade-in w-[80%] max-h-16 rounded rounded-md object-cover object-center"
