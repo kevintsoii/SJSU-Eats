@@ -37,11 +37,10 @@ const Header = () => {
   };
 
   const handleScroll = () => {
-    console.log(showNavbar);
-    if (window.scrollY >= scrollY) {
-      setShowNavbar(false);
-    } else {
+    if (window.scrollY < scrollY || window.scrollY < 100) {
       setShowNavbar(true);
+    } else {
+      setShowNavbar(false);
     }
     setScrollY(window.scrollY);
   };
