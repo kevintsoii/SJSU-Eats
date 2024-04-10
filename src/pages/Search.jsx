@@ -41,7 +41,7 @@ const Search = () => {
       <Header />
       <span className="block mt-20"></span>
 
-      <h1 className="text-3xl font-semibold text-center pt-10">
+      <h1 className="text-3xl font-semibold text-center pt-10 px-6">
         <span className="text-blue">Search</span> for upcoming items
       </h1>
 
