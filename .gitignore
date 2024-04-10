@@ -30,7 +30,3 @@ dist-ssr
 .venv
 __pycache__/
 **/__pycache__/
-
-# Images
-src/assets/images/*
-!src/assets/images/no-image.svg
