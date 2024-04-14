@@ -11,6 +11,7 @@ import Menu from "./pages/Menu";
 import Search from "./pages/Search";
 import Location from "./pages/Location";
 import Tracker from "./pages/Tracker";
+import ScrollToTop from "./components/ScrollToTop";
 
 const queryClient = new QueryClient();
 
@@ -31,6 +32,7 @@ function App() {
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
+          <ScrollToTop />
           <ItemContext.Provider value={{ itemData, fetchItemData }}>
             <Routes>
               <Route path="/" element={<Home />} />

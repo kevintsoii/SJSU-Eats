@@ -36,16 +36,16 @@ const Header = () => {
     setScreenWidth(window.innerWidth);
   };
 
-  const handleScroll = () => {
-    if (window.scrollY < scrollY || window.scrollY < 100) {
-      setShowNavbar(true);
-    } else {
-      setShowNavbar(false);
-    }
-    setScrollY(window.scrollY);
-  };
-
   useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY < scrollY || window.scrollY < 200) {
+        setShowNavbar(true);
+      } else {
+        setShowNavbar(false);
+      }
+      setScrollY(window.scrollY);
+    };
+
     window.addEventListener("resize", handleResize);
     window.addEventListener("scroll", handleScroll);
 
@@ -58,7 +58,15 @@ const Header = () => {
   if (screenWidth >= 640 || showNavbar || showMenu) {
     return (
       <>
-        <header className="z-10 fixed left-0 right-0 flex items-center justify-between shadow-lg h-20 border-b border-black backdrop-blur-xl px-5 md:px-20 fade-down-fast">
+        <header
+          className="z-10 fixed left-0 right-0 flex items-center justify-between shadow-lg h-20 border-b border-black backdrop-blur-xl px-5 md:px-20 "
+          style={{
+            animation:
+              scrollY > 200 && screenWidth < 640
+                ? "fadeDown 0.5s ease-in-out"
+                : "",
+          }}
+        >
           <Link to="/" className="flex items-center">
             <img src="/logo.png" alt="logo" className="w-12 h-12" />
             <h1 className="text-2xl md:text-3xl font-semibold ml-1">
