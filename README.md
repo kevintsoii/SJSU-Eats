@@ -1,8 +1,37 @@
-# React + Vite
+# SJSU Eats
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+SJSU Eats is a menu website that enables San José State University students & visitors to view the current menu at the Dining Commons, search for upcoming foods, and conveniently add items to a calorie tracker.
 
-Currently, two official plugins are available:
+Inspired by [Dine On Campus](https://dineoncampus.com/sjsu/whats-on-the-menu).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Demo
+View on https://sjsu-eats.vercel.app/
+
+![image](https://github.com/kevintsoii/SJSU-Eats/assets/55469119/e18d0094-e89d-4d41-b75a-29d65f758bb7)
+
+## Tech Stack
+
+Frontend - React, Redux, Tailwind CSS
+
+Backend - Python, Flask, PostgreSQL
+
+## Prerequisites
+
+- [Node.js](https://nodejs.org/en)
+
+## Getting Started
+
+1. Set up the backend - https://github.com/kevintsoii/SJSU-Eats-Backend
+   
+2. Create an `.env` file with the default Flask url
+   
+   ```
+   VITE_API_URL="http://127.0.0.1:5000"
+   ```
+   
+3. Install dependencies and run the project
+   
+   ```
+   npm install
+   npm run dev
+   ```
