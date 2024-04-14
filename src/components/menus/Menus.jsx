@@ -24,7 +24,7 @@ const formatData = (menuData) => {
 const Menus = ({ menuData }) => {
   if (Object.values(menuData).every((arr) => arr.length === 0))
     return (
-      <div className="flex flex-col items-center justify-items-center border border-black rounded-lg w-[60%] lg:w-[30%] py-5 fade-down">
+      <div className="flex flex-col items-center justify-items-center border border-black rounded-lg w-[60%] lg:w-[30%] py-5 fade-down mt-3">
         <img src="./closed.png" className="w-40" />
         <h3 className="text-2xl py-3 text-center">
           The Dining Commons is closed.

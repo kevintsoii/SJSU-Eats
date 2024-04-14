@@ -90,7 +90,7 @@ body {
 }
 
 .dot {
-  animation: pulse 1.5s infinite;
+  animation: dotPulse 1.5s infinite;
 }
 
 .dot:nth-child(1) {
@@ -105,7 +105,7 @@ body {
   animation-delay: 1s;
 }
 
-@keyframes pulse {
+@keyframes dotPulse {
   0%,
   100% {
     transform: scale(1);
