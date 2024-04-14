@@ -38,7 +38,7 @@ const Header = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY < scrollY || window.scrollY < 200) {
+      if (window.scrollY < scrollY || window.scrollY < 100) {
         setShowNavbar(true);
       } else {
         setShowNavbar(false);
@@ -62,7 +62,7 @@ const Header = () => {
           className="z-10 fixed left-0 right-0 flex items-center justify-between shadow-lg h-20 border-b border-black backdrop-blur-xl px-5 md:px-20 "
           style={{
             animation:
-              scrollY > 200 && screenWidth < 640
+              scrollY > 100 && screenWidth < 640
                 ? "fadeDown 0.5s ease-in-out"
                 : "",
           }}

@@ -72,9 +72,6 @@ const ItemCard = ({ item }) => {
         </div>
       </div>
       <div className="w-[35%] border-l border-gray-500 lg:brightness-90 hover:brightness-100">
-        {!imageLoaded && (
-          <div className="fixed animate-pulse bg-zinc-300 w-full h-full"></div>
-        )}
         <img
           key={item}
           src={
