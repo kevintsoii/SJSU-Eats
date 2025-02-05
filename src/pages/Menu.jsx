@@ -1,5 +1,6 @@
 import moment from "moment";
 import { useQuery } from "react-query";
+import { useParams, useNavigate } from "react-router-dom";
 import { useState, useContext, useEffect } from "react";
 
 import { ItemContext } from "../contexts/ItemContext";
@@ -23,6 +24,8 @@ const convrtDateToMeal = (date) => {
 };
 
 const Menu = () => {
+  const navigate = useNavigate();
+  const { dateParam } = useParams();
   const { itemData, fetchItemData } = useContext(ItemContext);
 
   const [date, setDate] = useState(moment());
@@ -56,6 +59,12 @@ const Menu = () => {
   );
 
   useEffect(() => {
+    if (dateParam && moment(dateParam, "YYYY-MM-DD", true).isValid()) {
+      setDate(moment(dateParam, "YYYY-MM-DD"));
+    }
+  }, [dateParam]);
+
+  useEffect(() => {
     const warningDismissed = localStorage.getItem("warningDismissed");
     if (!warningDismissed) {
       setWarning(true);
@@ -63,7 +72,9 @@ const Menu = () => {
   }, []);
 
   const handleDateChange = (days) => {
-    setDate((date) => date.clone().add(days, "days"));
+    const newDate = date.clone().add(days, "days");
+    setDate(newDate);
+    navigate(`/menu/${newDate.format("YYYY-MM-DD")}`);
   };
 
   const handleMealChange = (e) => {

@@ -41,8 +41,8 @@ const Cart = () => {
             <img
               src={
                 itemData[item]["image"]
-                  ? "/images/" + itemData[item]["image"]
-                  : "/images/no-image.svg"
+                  ? itemData[item]["image"]
+                  : "/no-image.svg"
               }
               loading="lazy"
               className="fade-in w-[80%] max-h-16 rounded rounded-md object-cover object-center"
@@ -68,10 +68,10 @@ const Cart = () => {
               </div>
             </div>
             <h3 className="text-lg">
-              {itemData[item]["nutrients"]["Calories"].slice(0, -4) * amount}
+              {itemData[item]["calories"].slice(0, -4) * amount}
             </h3>
             <h3 className="text-lg">
-              {itemData[item]["nutrients"]["Protein"].slice(0, -1) * amount}
+              {itemData[item]["protein"].slice(0, -1) * amount}
             </h3>
           </div>
         ))}
@@ -90,9 +90,8 @@ const Cart = () => {
           </div>
           <div className="flex justify-between">
             <h3 className="text-lg text-slate-800">
-              {itemData[item]["nutrients"]["Calories"].slice(0, -4) * amount}{" "}
-              kcal,{" "}
-              {itemData[item]["nutrients"]["Protein"].slice(0, -1) * amount} g
+              {itemData[item]["calories"].slice(0, -4) * amount} kcal,{" "}
+              {itemData[item]["protein"].slice(0, -1) * amount} g
             </h3>
             <div>
               <button

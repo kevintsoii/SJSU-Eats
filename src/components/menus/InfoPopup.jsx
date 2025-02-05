@@ -1,13 +1,32 @@
+import { useEffect } from "react";
+import { useQuery } from "react-query";
 import PropTypes from "prop-types";
 
 import Filter from "./Filter";
 
 import CloseIcon from "@mui/icons-material/Close";
 
-const InfoPopup = ({ enabled, onClose, data }) => {
-  if (!enabled) return null;
+const InfoPopup = ({ enabled, onClose, itemName }) => {
+  const fetchItem = async (itemName) => {
+    const response = await fetch(
+      `${import.meta.env.VITE_API_URL}/api/item/${itemName}`
+    );
+    const data = await response.json();
+    console.log(data);
+    return data;
+  };
 
-  console.log(data);
+  const { data, isLoading, error } = useQuery(
+    ["item", itemName],
+    () => fetchItem(itemName),
+    {
+      staleTime: Infinity,
+      refetchOnWindowFocus: false,
+      enabled: enabled,
+    }
+  );
+
+  if (!enabled) return null;
 
   return (
     <div
@@ -26,62 +45,62 @@ const InfoPopup = ({ enabled, onClose, data }) => {
             />
           </button>
 
-          <img
-            src={
-              data["image"]
-                ? "/images/" + data["image"]
-                : "/images/no-image.svg"
-            }
-            loading="lazy"
-            className="w-full sm:w-[70%] md:w-[50%] xl:w-[40%] h-[35%] sm:h-[50%] object-cover object-center border border-gray-500 lg:brightness-90"
-          ></img>
-
-          <h1 className="text-2xl font-medium mt-4 text-gray-800">
-            {data["name"]}
-          </h1>
-          {data["description"] && (
-            <h2 className="text-lg mt-1">{data["description"]}</h2>
-          )}
-
-          <div className="flex flex-wrap gap-2 my-3 ml-[-5px]">
-            {data["filters"].map((filter, index) => (
-              <Filter key={index} text={filter} />
-            ))}
-          </div>
-
-          {data["ingredients"] && (
+          {data && (
             <>
-              <h2 className="text-xl font-medium">Ingredients</h2>
-              <ul className="ml-6">
-                {data["ingredients"].split(", ").map((value, index) => (
-                  <li key={index}>{value}</li>
+              <img
+                src={data["image"] ? data["image"] : "/no-image.svg"}
+                loading="lazy"
+                className="w-full sm:w-[70%] md:w-[50%] xl:w-[40%] h-[35%] sm:h-[50%] object-cover object-center border border-gray-500 lg:brightness-90"
+              ></img>
+
+              <h1 className="text-2xl font-medium mt-4 text-gray-800">
+                {data["name"]}
+              </h1>
+              {data["description"] && (
+                <h2 className="text-lg mt-1">{data["description"]}</h2>
+              )}
+
+              <div className="flex flex-wrap gap-2 my-3 ml-[-5px]">
+                {data["filters"].map((filter, index) => (
+                  <Filter key={index} text={filter} />
                 ))}
+              </div>
+
+              {data["ingredients"] && (
+                <>
+                  <h2 className="text-xl font-medium">Ingredients</h2>
+                  <ul className="ml-6">
+                    {data["ingredients"].split(", ").map((value, index) => (
+                      <li key={index}>{value}</li>
+                    ))}
+                  </ul>
+                </>
+              )}
+              <h2 className="text-xl mt-1 font-medium">Nutrients</h2>
+              <ul className="ml-6 mb-3">
+                {Object.entries(data["nutrients"])
+                  .filter(
+                    ([, value]) =>
+                      !value.startsWith("-") &&
+                      (!value.startsWith("0") || value.startsWith("0."))
+                  )
+                  .map(([key, value], index) => (
+                    <li key={index}>
+                      {key}: {value}
+                    </li>
+                  ))}
               </ul>
+
+              <a
+                href={data["image_source"]}
+                target="_blank"
+                rel="noreferrer"
+                className="text-blue underline"
+              >
+                Image Source
+              </a>
             </>
           )}
-          <h2 className="text-xl mt-1 font-medium">Nutrients</h2>
-          <ul className="ml-6 mb-3">
-            {Object.entries(data["nutrients"])
-              .filter(
-                ([, value]) =>
-                  !value.startsWith("-") &&
-                  (!value.startsWith("0") || value.startsWith("0."))
-              )
-              .map(([key, value], index) => (
-                <li key={index}>
-                  {key}: {value}
-                </li>
-              ))}
-          </ul>
-
-          <a
-            href={data["image_source"]}
-            target="_blank"
-            rel="noreferrer"
-            className="text-blue underline"
-          >
-            Image Source
-          </a>
         </div>
       </div>
     </div>
@@ -93,5 +112,5 @@ export { InfoPopup as Popup };
 InfoPopup.propTypes = {
   enabled: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  data: PropTypes.object.isRequired,
+  itemName: PropTypes.string.isRequired,
 };

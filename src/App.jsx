@@ -36,7 +36,7 @@ function App() {
           <ItemContext.Provider value={{ itemData, fetchItemData }}>
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/menu" element={<Menu />} />
+              <Route path="/menu/:dateParam?" element={<Menu />} />
               <Route path="/search" element={<Search />} />
               <Route path="/location" element={<Location />} />
               <Route path="/tracker" element={<Tracker />} />

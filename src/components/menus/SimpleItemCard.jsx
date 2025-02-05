@@ -12,7 +12,7 @@ const SimpleItemCard = ({ item }) => {
         {item}
       </h2>
       <p className="text-gray-600 md:text-md">
-        {itemData[item]["nutrients"]["Calories"].slice(0, -4)} cal
+        {itemData[item]["calories"].slice(0, -4)} cal
       </p>
     </div>
   );
