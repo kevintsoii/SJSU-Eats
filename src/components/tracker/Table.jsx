@@ -41,8 +41,7 @@ const Table = () => {
             .reduce(
               (accumulator, [item, amount]) =>
                 (accumulator +=
-                  itemData[item]["nutrients"]["Calories"].slice(0, -4) *
-                  amount),
+                  itemData[item]["calories"].slice(0, -4) * amount),
               0
             )
             .toLocaleString()}{" "}
@@ -52,8 +51,7 @@ const Table = () => {
           Total Protein:{" "}
           {Object.entries(items).reduce(
             (accumulator, [item, amount]) =>
-              (accumulator +=
-                itemData[item]["nutrients"]["Protein"].slice(0, -1) * amount),
+              (accumulator += itemData[item]["protein"].slice(0, -1) * amount),
             0
           )}{" "}
           g

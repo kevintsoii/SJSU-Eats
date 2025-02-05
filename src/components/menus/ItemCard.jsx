@@ -54,7 +54,7 @@ const ItemCard = ({ item }) => {
             {item}
           </h2>
           <p className="text-gray-600 md:text-md">
-            {itemData[item]["nutrients"]["Calories"].slice(0, -4)} cal
+            {itemData[item]["calories"].slice(0, -4)} cal
           </p>
         </div>
         <div className="mb-1">
@@ -75,9 +75,7 @@ const ItemCard = ({ item }) => {
         <img
           key={item}
           src={
-            itemData[item]["image"]
-              ? "/images/" + itemData[item]["image"]
-              : "/images/no-image.svg"
+            itemData[item]["image"] ? itemData[item]["image"] : "/no-image.svg"
           }
           onLoad={onImageLoad}
           onError={onImageLoad}
@@ -86,11 +84,7 @@ const ItemCard = ({ item }) => {
           }`}
         ></img>
       </div>
-      <Popup
-        enabled={popupEnabled}
-        onClose={handleClose}
-        data={{ ...itemData[item], name: item }}
-      />
+      <Popup enabled={popupEnabled} onClose={handleClose} itemName={item} />
     </div>
   );
 };

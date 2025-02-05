@@ -22,7 +22,7 @@ const formatData = (menuData) => {
 };
 
 const Menus = ({ menuData }) => {
-  if (Object.values(menuData).every((arr) => arr.length === 0))
+  if ("closed" in menuData)
     return (
       <div className="flex flex-col items-center justify-items-center border border-black rounded-lg w-[60%] lg:w-[30%] py-5 fade-down mt-3">
         <img src="./closed.png" className="w-40" />
@@ -36,8 +36,9 @@ const Menus = ({ menuData }) => {
 
   return (
     <div className="flex flex-col w-[90%]">
-      {Object.entries(menuData).map(([location, items], index) => {
-        if (items.length > 0)
+      {Object.entries(menuData).map(([location, locationData], index) => {
+        const items = locationData.items;
+        if (items && items.length > 0)
           return (
             <div key={index} className="flex flex-col pb-6">
               <h1 className="text-4xl underline decoration-blue decoration-solid underline-offset-8 mb-5 leading-snug">
