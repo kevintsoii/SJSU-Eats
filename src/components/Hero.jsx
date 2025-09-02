@@ -21,7 +21,7 @@ const Hero = () => {
           <Link to="/menu">
             <button className="inline-flex items-center rounded-full bg-blue shadow-lg text-background text-lg font-medium px-5 py-2 hover:bg-gold hover:text-blue">
               <span>Get Started</span>
-              <img src="click.png" className="w-8 pl-2" />
+              <img src="/click.png" className="w-8 pl-2" />
             </button>
           </Link>
         </div>

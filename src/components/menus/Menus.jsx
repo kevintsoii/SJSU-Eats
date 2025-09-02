@@ -25,7 +25,7 @@ const Menus = ({ menuData }) => {
   if ("closed" in menuData)
     return (
       <div className="flex flex-col items-center justify-items-center border border-black rounded-lg w-[60%] lg:w-[30%] py-5 fade-down mt-3">
-        <img src="./closed.png" className="w-40" />
+        <img src="/closed.png" className="w-40" />
         <h3 className="text-2xl py-3 text-center">
           The Dining Commons is closed.
         </h3>
