@@ -7,6 +7,8 @@ const Error = ({ message }) => {
       <h3 className="text-2xl py-3 text-center">
         {message === "No menus found for this date."
           ? "The Dining Commons is closed."
+          : message === "Still scraping, check back later"
+          ? "Still scraping, check back later"
           : "An error occurred"}
       </h3>
     </div>

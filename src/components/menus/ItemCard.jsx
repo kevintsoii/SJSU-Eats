@@ -54,7 +54,10 @@ const ItemCard = ({ item }) => {
             {item}
           </h2>
           <p className="text-gray-600 md:text-md">
-            {itemData[item]["calories"].slice(0, -4)} cal
+            {itemData[item] && itemData[item]["calories"] 
+              ? `${itemData[item]["calories"].slice(0, -4)} cal`
+              : ""
+            }
           </p>
         </div>
         <div className="mb-1">
@@ -75,7 +78,9 @@ const ItemCard = ({ item }) => {
         <img
           key={item}
           src={
-            itemData[item]["image"] ? itemData[item]["image"] : "/no-image.svg"
+            itemData[item] && itemData[item]["image"] 
+              ? itemData[item]["image"] 
+              : "/no-image.svg"
           }
           onLoad={onImageLoad}
           onError={onImageLoad}

@@ -34,17 +34,49 @@ const Menu = () => {
   const [warning, setWarning] = useState(false);
 
   const fetchData = async (date) => {
-    const response = await fetch(
-      `${import.meta.env.VITE_API_URL}/api/menus/${date}`
-    );
-    const data = await response.json();
-    if ("new" in data) {
-      await fetchItemData();
+    let retries = 0;
+    const maxRetries = 5;
+    
+    while (retries < maxRetries) {
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/menus/${date}`
+        );
+        const data = await response.json();
+        
+        // Check if the response status is 202 and retry if so
+        if (response.status === 202) {
+          if (retries < maxRetries - 1) {
+            retries++;
+            await new Promise(resolve => setTimeout(resolve, 2000)); // 2 second delay
+            continue;
+          } else {
+            // Hit max retries for 202 error
+            throw "Still scraping, check back later";
+          }
+        }
+        
+        if ("new" in data) {
+          await fetchItemData();
+        }
+        if ("error" in data) {
+          throw data.error;
+        }
+        return data;
+      } catch (error) {
+        // If it's our custom 202 message, throw it immediately
+        if (error === "Still scraping, check back later") {
+          throw error;
+        }
+        
+        if (retries < maxRetries - 1) {
+          retries++;
+          await new Promise(resolve => setTimeout(resolve, 2000)); // 2 second delay
+          continue;
+        }
+        throw error;
+      }
     }
-    if ("error" in data) {
-      throw data.error;
-    }
-    return data;
   };
 
   const { isLoading, error, data } = useQuery(
